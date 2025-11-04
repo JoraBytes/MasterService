@@ -15,10 +15,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import com.jora.masterservice.common.ErrorHandler;
-import com.jora.masterservice.main.dao.OperatorDao;
-import com.jora.masterservice.main.entity.Operator;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -36,7 +33,7 @@ public class MainDBConfig {
 	@Bean("mainDataSource")
 	DataSource mainDatasource() throws Exception {
 		try {
-			String database = ApplicationConfig.companyTag + "maindb";
+			String database = applicationConfig.getCompanyTag() + "maindb";
 			String query = "create database if not exists " + database;
 			new JdbcTemplate(masterDataSource).update(query);
 			return applicationConfig.getDatasource(database);

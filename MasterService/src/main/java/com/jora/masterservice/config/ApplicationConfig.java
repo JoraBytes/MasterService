@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -15,19 +14,22 @@ import com.jora.encodedecode.common.EncryptionDecryption;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
+@Data
 public class ApplicationConfig {
-	@Autowired
+
 	private final BuildProperties buildProperties;
 
-	public static String serverName, companyTag, portNo, userName, password, companyFlag;
-	public static int dbYear;
+	private String serverName, companyTag, portNo, userName, password, companyFlag;
+	private int dbYear;
 
 	protected void fileRead() throws Exception {
 		File file = new ClassPathResource("Appconfig.ini").getFile();
+
 		if (!file.exists()) {
 			throw new Exception("Appconfig.ini File not found!...");
 		}
@@ -70,8 +72,8 @@ public class ApplicationConfig {
 		url.append("applicationName=").append(buildProperties.getName());
 //		String url = String.format("jdbc:mysql://%s:%s/%s", serverName, portNo, database);
 		config.setJdbcUrl(url.toString());
-		config.setUsername(ApplicationConfig.userName);
-		config.setPassword(ApplicationConfig.password);
+		config.setUsername(userName);
+		config.setPassword(password);
 		config.setMaximumPoolSize(5);
 		config.setMinimumIdle(1);
 		config.setMaxLifetime(TimeUnit.MINUTES.toMillis(30));

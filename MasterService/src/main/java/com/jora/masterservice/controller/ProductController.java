@@ -7,31 +7,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jora.masterservice.main.entity.Operator;
-import com.jora.masterservice.service.OperatorService;
+import com.jora.masterservice.main.entity.Product;
+import com.jora.masterservice.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/operator")
+@RequestMapping("/product")
 @RequiredArgsConstructor
-public class OperatorController {
+public class ProductController {
 
-	private final OperatorService operatorService;
+	private final ProductService productService;
 
 	@GetMapping("/view")
-	public ResponseEntity<?> getAllOperators() {
+	public ResponseEntity<?> getProducts() {
 		try {
-			return ResponseEntity.ok(operatorService.getAllOperators());
+			return ResponseEntity.ok(productService.getAllProducts());
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().body(e.getMessage());
 		}
 	}
 
 	@PostMapping("/save")
-	public ResponseEntity<?> save(@RequestBody Operator operator) {
+	public ResponseEntity<?> save(@RequestBody Product product) {
 		try {
-			return ResponseEntity.ok(operatorService.save(operator));
+			return ResponseEntity.ok(productService.save(product));
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().body(e.getMessage());
 		}

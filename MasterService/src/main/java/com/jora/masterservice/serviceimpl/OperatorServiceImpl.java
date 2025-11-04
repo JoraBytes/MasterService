@@ -9,22 +9,22 @@ import org.springframework.stereotype.Service;
 import com.jora.masterservice.common.ErrorHandler;
 import com.jora.masterservice.main.dao.OperatorDao;
 import com.jora.masterservice.main.entity.Operator;
-import com.jora.masterservice.service.LoginService;
+import com.jora.masterservice.service.OperatorService;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class LoginServiceImpl implements LoginService {
+public class OperatorServiceImpl implements OperatorService {
 
 	private final OperatorDao operatorDao;
 
 	private final Logger log = LogManager.getLogger(getClass());
 
 	@Override
-	public Operator chkOperator(int operatorCode) throws Exception {
+	public List<Operator> getAllOperators() throws Exception {
 		try {
-			return operatorDao.findByActiveAndOperatorCode("Y", operatorCode);
+			return operatorDao.findAll();
 		} catch (Exception e) {
 			log.error(ErrorHandler.errorTraceForLogger(e));
 			throw e;
@@ -32,13 +32,12 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public List<Operator> loadOperator() throws Exception {
+	public Operator save(Operator operator) throws Exception {
 		try {
-			return operatorDao.findAllByActive("Y");
+			return operatorDao.save(operator);
 		} catch (Exception e) {
 			log.error(ErrorHandler.errorTraceForLogger(e));
 			throw e;
 		}
 	}
-
 }

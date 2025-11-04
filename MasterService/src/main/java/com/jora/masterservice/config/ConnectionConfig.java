@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class ConnectionConfig {
 
 	private final OperatorDao operatorDao;
+	private final ApplicationConfig applicationConfig;
 
 	@PostConstruct
 	@Transactional("masterTransactionManager")
@@ -36,8 +37,8 @@ public class ConnectionConfig {
 		operator.setCancelAccess("Y");
 		operator.setRateEntry("Y");
 		operator.setPreviousDateEntry("Y");
-		operator.setCompanyFlag(ApplicationConfig.companyFlag);
-		operator.setCompanyTag(ApplicationConfig.companyTag);
+		operator.setCompanyFlag(applicationConfig.getCompanyFlag());
+		operator.setCompanyTag(applicationConfig.getCompanyTag());
 		operator.setAutoGen("Y");
 		return operator;
 	}
